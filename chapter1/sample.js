@@ -1,7 +1,7 @@
-var a = 10;
+let a = 10;
 
 function add() {
-  var b = 5;
+  let b = 5;
   console.log(a + b);
 }
 

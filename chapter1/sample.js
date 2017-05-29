@@ -47,6 +47,8 @@ let wakeup = function() {
 observer.on('morning', greet);
 observer.on('morning', wakeup);
 observer.trigger('morning');
+observer.off('morning', wakeup);
+observer.trigger('morning');
 
 // evening イベント
 let sayEvening = function() {

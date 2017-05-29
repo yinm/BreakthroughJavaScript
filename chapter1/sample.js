@@ -1,21 +1,20 @@
-let count1 = 0;
-function counter1() {
-  count1++;
-  console.log(count1);
+function createCounter() {
+  let count = 0;
+  return function() {
+    count++;
+    console.log(count);
+  }
 }
 
-let count2 = 0;
-function counter2() {
-  count2++;
-  console.log(count2);
-}
+let counter1 = createCounter();
+counter1();
+counter1();
+counter1();
 
-counter1();
-counter1();
+let counter2 = createCounter();
 counter2();
 counter2();
 
-count1 = 100;
+count = 100;
 
-counter1();
 counter1();

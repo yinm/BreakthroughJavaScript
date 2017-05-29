@@ -1,12 +1,9 @@
-let a = 10;
-let b = 15;
+let count = 0;
 
-function add() {
-  a = 5;
-  let b = 5;
-  console.log(a + b);
+function counter() {
+  count++;
+  console.log(count);
 }
 
-add();
-console.log(a);
-console.log(b);
+counter();
+counter();

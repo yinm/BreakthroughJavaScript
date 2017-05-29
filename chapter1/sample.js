@@ -1,20 +1,46 @@
-function createCounter() {
-  let count = 0;
-  return function() {
-    count++;
-    console.log(count);
-  }
+function Observer() {
+  this.listeners = [];
 }
 
-let counter1 = createCounter();
-counter1();
-counter1();
-counter1();
+Observer.prototype.on = function(func) {
+  this.listeners.push(func);
+};
 
-let counter2 = createCounter();
-counter2();
-counter2();
+Observer.prototype.off = function(func) {
+  // 本だと間違えてる (linstener になってた)
+  let length = this.listeners.length;
+  for (let i = 0; i < length; i++) {
 
-count = 100;
+    let listener = this.listeners[i];
+    if (listener === func) {
+      this.listeners.splice(i, 1);
+    }
+  }
+};
 
-counter1();
+
+Observer.prototype.trigger = function(event) {
+  let length = this.listeners.length;
+
+  for (let i = 0; i < length; i++) {
+    let listener = this.listeners[i];
+    listener();
+  }
+};
+
+let observer = new Observer();
+
+let greet = function() {
+  console.log('Good morning');
+};
+
+let walk = function() {
+  console.log('tokotoko...');
+};
+
+observer.on(greet);
+observer.on(walk);
+observer.trigger();
+observer.off(greet);
+console.log('greetをoffにした');
+observer.trigger();

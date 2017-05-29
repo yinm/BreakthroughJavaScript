@@ -1,46 +1,57 @@
 function Observer() {
-  this.listeners = [];
+  this.listeners = {};
 }
 
-Observer.prototype.on = function(func) {
-  this.listeners.push(func);
+Observer.prototype.on = function(event, func) {
+  if (!this.listeners[event]) {
+    this.listeners[event] = [];
+  }
+  this.listeners[event].push(func);
 };
 
-Observer.prototype.off = function(func) {
-  // 本だと間違えてる (linstener になってた)
-  let length = this.listeners.length;
+Observer.prototype.off = function(event, func) {
+  let ref = this.listeners[event];
+  let length = ref.length;
   for (let i = 0; i < length; i++) {
 
-    let listener = this.listeners[i];
+    let listener = ref[i];
     if (listener === func) {
-      this.listeners.splice(i, 1);
+      ref.splice(i, 1);
     }
   }
 };
 
-
 Observer.prototype.trigger = function(event) {
-  let length = this.listeners.length;
-
+  let ref = this.listeners[event];
+  let length = ref.length;
   for (let i = 0; i < length; i++) {
-    let listener = this.listeners[i];
-    listener();
+
+    let listener = ref[i];
+    if (typeof listener === 'function') {
+      listener();
+    }
   }
 };
 
 let observer = new Observer();
 
+// morning イベント
 let greet = function() {
   console.log('Good morning');
 };
 
-let walk = function() {
-  console.log('tokotoko...');
+let wakeup = function() {
+  console.log('起きる');
 };
 
-observer.on(greet);
-observer.on(walk);
-observer.trigger();
-observer.off(greet);
-console.log('greetをoffにした');
-observer.trigger();
+observer.on('morning', greet);
+observer.on('morning', wakeup);
+observer.trigger('morning');
+
+// evening イベント
+let sayEvening = function() {
+  console.log('Good evening');
+};
+
+observer.on('evening', sayEvening());
+observer.trigger('evening');

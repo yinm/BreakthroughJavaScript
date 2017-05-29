@@ -3,8 +3,11 @@ function Human(name) {
 }
 
 Human.prototype.greet = function() {
-  console.log('Hello ' + this.name);
+  console.log('My name is ' + this.name);
 };
 
-let mike = new Human('Mike');
-mike.greet();
+let alice = new Human('Alice');
+alice.greet();
+
+let bob = new Human('Bob');
+bob.greet();

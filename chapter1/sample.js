@@ -1,9 +1,12 @@
-let a = 10;
+var a = 10;
+var b = 15;
 
 function add() {
-  let b = 5;
+  a = 5;
+  var b = 5;
   console.log(a + b);
 }
 
 add();
-console.log(a + b);
+console.log(a);
+console.log(b);

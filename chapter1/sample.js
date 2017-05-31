@@ -7,4 +7,5 @@ function greet(arg1, arg2) {
 }
 
 let mike = new Human('Mike');
-greet.apply(mike, ['Hello ', '!!']);
+let greetMorning = greet.bind(mike);
+greetMorning('Good Morning ', '!!');

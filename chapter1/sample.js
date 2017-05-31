@@ -7,4 +7,4 @@ function greet(arg1, arg2) {
 }
 
 let mike = new Human('Mike');
-greet.call(mike, 'Hello ', '!!');
+greet.apply(mike, ['Hello ', '!!']);

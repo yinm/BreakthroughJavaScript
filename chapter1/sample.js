@@ -1,10 +1,6 @@
-function Human(name) {
-  this.name = name;
+function greet() {
+  console.log('Hello ' + this.name);
+  console.log(this);
 }
 
-Human.prototype.greet = function() {
-  console.log('Hello ' + this.name);
-};
-
-let mike = new Human('Mike');
-mike.greet();
+greet();

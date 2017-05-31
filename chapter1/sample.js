@@ -1,6 +1,10 @@
-function greet() {
-  console.log('Hello ' + this.name);
-  console.log(this);
+function Human(name) {
+  this.name = name;
 }
 
-greet();
+function greet(arg1, arg2) {
+  console.log(arg1 + this.name + arg2);
+}
+
+let mike = new Human('Mike');
+greet.call(mike, 'Hello ', '!!');

@@ -1,5 +1,10 @@
 function AppModel(attrs) {
   this.val = '';
+  this.attrs = {
+    required: '',
+    maxlength: 8,
+    minlength: 4
+  };
   this.listeners = {
     valid: [],
     invalid: []
@@ -23,6 +28,18 @@ AppModel.prototype.set = function(val) {
   this.validate();
 };
 
+AppModel.prototype.validate = function() {
+  let val;
+  this.errors = [];
+
+  for (let key in this.attrs) {
+    val = this.attrs[key];
+    if (!this[key](val)) this.errors.push(key);
+  }
+
+  this.trigger(!this.errors.length ? 'valid' : 'invalid');
+};
+
 AppModel.prototype.required = function() {
   return this.val !== '';
 };
@@ -34,5 +51,4 @@ AppModel.prototype.maxlength = function(num) {
 AppModel.prototype.minlength = function(num) {
   return num <= this.val.length;
 };
-
 

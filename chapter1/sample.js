@@ -68,3 +68,11 @@ AppView.prototype.initialize = function(el) {
 
   this.model = new AppModel(obj);
 };
+
+AppView.prototype.handleEvents = function() {
+  let self = this;
+
+  this.$el.on('keyup', function(e) {
+    self.onKeyup(e);
+  });
+};

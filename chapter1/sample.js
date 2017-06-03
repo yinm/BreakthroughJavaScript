@@ -22,3 +22,17 @@ AppModel.prototype.set = function(val) {
   this.val = val;
   this.validate();
 };
+
+AppModel.prototype.required = function() {
+  return this.val !== '';
+};
+
+AppModel.prototype.maxlength = function(num) {
+  return num >= this.val.length;
+};
+
+AppModel.prototype.minlength = function(num) {
+  return num <= this.val.length;
+};
+
+

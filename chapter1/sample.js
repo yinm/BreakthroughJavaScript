@@ -59,6 +59,7 @@ function AppView(el) {
 
 AppView.prototype.initialize = function(el) {
   this.$el = $(el);
+  this.$list = this.$el.next().children();
 
   let obj = this.$el.data();
 
@@ -88,4 +89,19 @@ AppView.prototype.handleEvents = function() {
 AppView.prototype.onKeyup = function(e) {
   let $target = $(e.currentTarget);
   this.model.set($target.val());
+};
+
+AppView.prototype.onValid = function() {
+  this.$el.removeClass('error');
+  this.$list.hide();
+};
+
+AppView.prototype.onInvalid = function() {
+  let self = this;
+  this.$el.addClass('error');
+  this.$list.hide();
+
+  $.each(this.model.errors, function(index, val) {
+    self.$list.filter('[data-error="' + val + '"]').show();
+  });
 };

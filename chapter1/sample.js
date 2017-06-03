@@ -76,3 +76,8 @@ AppView.prototype.handleEvents = function() {
     self.onKeyup(e);
   });
 };
+
+AppView.prototype.onKeyup = function(e) {
+  let $target = $(e.currentTarget);
+  this.model.set($target.val());
+};

@@ -52,3 +52,19 @@ AppModel.prototype.minlength = function(num) {
   return num <= this.val.length;
 };
 
+function AppView(el) {
+  this.initialize(el);
+  this.handleEvents();
+}
+
+AppView.prototype.initialize = function(el) {
+  this.$el = $(el);
+
+  let obj = this.$el.data();
+
+  if (this.$el.prop('required')) {
+    obj['required'] = '';
+  }
+
+  this.model = new AppModel(obj);
+};

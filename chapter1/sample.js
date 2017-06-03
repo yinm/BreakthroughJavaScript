@@ -105,3 +105,7 @@ AppView.prototype.onInvalid = function() {
     self.$list.filter('[data-error="' + val + '"]').show();
   });
 };
+
+$('input').each(function() {
+  new AppView(this);
+});

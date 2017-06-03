@@ -15,3 +15,10 @@ AppModel.prototype.trigger = function(event) {
     this();
   });
 };
+
+AppModel.prototype.set = function(val) {
+  if (this.val === val) return;
+
+  this.val = val;
+  this.validate();
+};

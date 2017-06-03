@@ -23,21 +23,20 @@ AppModel.prototype.trigger = function(event) {
 
 AppModel.prototype.set = function(val) {
   if (this.val === val) return;
-
   this.val = val;
   this.validate();
 };
 
-AppModel.prototype.validate = function() {
-  let val;
-  this.errors = [];
+AppModel.prototype.initialize = function(el) {
+  this.$el = $(el);
 
-  for (let key in this.attrs) {
-    val = this.attrs[key];
-    if (!this[key](val)) this.errors.push(key);
+  let obj = this.$el.data();
+
+  if (this.$el.prop('required')) {
+    obj['required'] = '';
   }
 
-  this.trigger(!this.errors.length ? 'valid' : 'invalid');
+  this.model = new AppModel(obj);
 };
 
 AppModel.prototype.required = function() {
@@ -50,6 +49,18 @@ AppModel.prototype.maxlength = function(num) {
 
 AppModel.prototype.minlength = function(num) {
   return num <= this.val.length;
+};
+
+AppModel.prototype.validate = function() {
+  let val;
+  this.errors = [];
+
+  for (let key in this.attrs) {
+    val = this.attrs[key];
+    if (!this[key](val)) this.errors.push(key);
+  }
+
+  this.trigger(!this.errors.length ? 'valid' : 'invalid');
 };
 
 function AppView(el) {

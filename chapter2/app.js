@@ -52,7 +52,9 @@ Modal.prototype.show = function(e) {
   this.$contents.html('<img src="' + src + '" />');
   this.$container.fadeIn();
   this.$overlay.fadeIn();
-  this.index = $target.data('index');
+
+  let index = $target.data('index');
+  this.countChange = this.createCounter(index, this.$el.length);
 
   return false;
 };
@@ -73,6 +75,12 @@ Modal.prototype.slide = function(index) {
 
 Modal.prototype.countChange = function(num, index, len) {
   return (index + num + len) % len;
+};
+
+Modal.prototype.createCounter = function(index, len) {
+  return function(num) {
+    return index = (index + num + len) % len;
+  };
 };
 
 Modal.prototype.next = function() {

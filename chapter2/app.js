@@ -1,5 +1,5 @@
-function resized() {
-  alert('Window resize');
+function loaded() {
+  alert('window load');
 }
 
-window.addEventListener('resize', resized, false);
+window.addEventListener('load', loaded, false);

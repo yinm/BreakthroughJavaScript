@@ -21,10 +21,9 @@
 
   <script>
     let listener = function(e) {
-      console.log(
-        'target:' + e.target.tagName,
-        'currentTarget:' + e.currentTarget.tagName
-      );
+      if (e.target.tagName === 'P') {
+        console.log('p');
+      }
     };
 
     document.body.addEventListener('click', listener, false);

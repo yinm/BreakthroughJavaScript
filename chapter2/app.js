@@ -42,6 +42,10 @@ Modal.prototype.handleEvents = function() {
     self.prev(e);
     return false;
   });
+
+  this.$window.on('resize', function() {
+    self.resize();
+  });
 };
 
 Modal.prototype.show = function(e) {
@@ -86,6 +90,16 @@ Modal.prototype.next = function() {
 Modal.prototype.prev = function() {
   this.index = this.countChange(-1, this.index, this.$el.length);
   this.slide(this.index);
+};
+
+Modal.prototype.resize = function() {
+  let w = this.$window.width();
+
+  if (w < 640) {
+    this.$container.css({'width': '320', 'height': '213'});
+  } else {
+    this.$container.css({'width': '750', 'height': '500'});
+  }
 };
 
 let modal = new Modal($('#modal-thumb a'));

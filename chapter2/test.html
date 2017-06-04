@@ -1,25 +1,33 @@
 <html>
 <head>
   <title>currentTarget</title>
+  <style>
+    div {
+      background-color: aqua;
+    }
+    p {
+      background-color: yellow;
+    }
+  </style>
 </head>
 <body>
-  <a href="http://js.studio-kingdom.com/javascript/event/current_target">参考: js STUDIO</a>
+  <a href="http://uhyohyo.net/javascript/3_5.html">参考: 三章第五回　イベントオブジェクト - uhyohyo.net</a>
 
-  <p>段落1</p>
-  <p>段落2</p>
-  <p>段落3</p>
+  <div>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+  </div>
 
   <script>
-    function hide(e) {
-      e.currentTarget.style.visibility = 'hidden';
-    }
+    let listener = function(e) {
+      console.log(
+        'target:' + e.target.tagName,
+        'currentTarget:' + e.currentTarget.tagName
+      );
+    };
 
-    let ps = document.getElementsByTagName('p');
-    let length = ps.length;
-
-    for (let i = 0; i < length; i++) {
-      ps[i].addEventListener('click', hide, false);
-    }
+    document.body.addEventListener('click', listener, false);
   </script>
 </body>
 </html>

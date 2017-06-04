@@ -11,7 +11,6 @@ Modal.prototype.initialize = function(el) {
   this.$prev      = $('#modal-prev');
   this.$overlay   = $('#modal-overlay');
   this.$window    = $(window);
-  this.index      = 0;
 
   this.handleEvents();
 };
@@ -71,10 +70,6 @@ Modal.prototype.slide = function(index) {
       $(this).attr('src', src).fadeIn();
     }
   });
-};
-
-Modal.prototype.countChange = function(num, index, len) {
-  return (index + num + len) % len;
 };
 
 Modal.prototype.createCounter = function(index, len) {

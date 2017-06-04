@@ -120,3 +120,4 @@ AppView.prototype.onInvalid = function() {
 $('input').each(function() {
   new AppView(this);
 });
+

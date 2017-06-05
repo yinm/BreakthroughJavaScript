@@ -35,3 +35,5 @@ Modal.prototype.show = function(e) {
   this.index = $target.data('index');
   return false;
 };
+
+let modal = new Modal($('#modal-thumb a'));

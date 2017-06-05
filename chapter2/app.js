@@ -24,3 +24,14 @@ Modal.prototype.handleEvents = function() {
     return false;
   });
 };
+
+Modal.prototype.show = function(e) {
+  let $target = $(e.currentTarget);
+  let src     = $target.attr('href');
+
+  this.$contetns.html('<img src="' + src + '"/>');
+  this.$container.fadeIn();
+  this.$overlay.fadeIn();
+  this.index = $target.data('index');
+  return false;
+};

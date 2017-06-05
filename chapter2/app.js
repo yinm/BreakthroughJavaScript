@@ -23,6 +23,16 @@ Modal.prototype.handleEvents = function() {
     self.show(e);
     return false;
   });
+
+  this.$close.on('click', function(e) {
+    self.hide(e);
+    return false;
+  });
+
+  this.$overlay.on('click', function(e) {
+    self.hide(e);
+    return false;
+  });
 };
 
 Modal.prototype.show = function(e) {
@@ -34,6 +44,11 @@ Modal.prototype.show = function(e) {
   this.$overlay.fadeIn();
   this.index = $target.data('index');
   return false;
+};
+
+Modal.prototype.hide = function(e) {
+  this.$container.fadeOut();
+  this.$overlay.fadeOut();
 };
 
 let modal = new Modal($('#modal-thumb a'));

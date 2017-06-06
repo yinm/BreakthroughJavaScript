@@ -100,3 +100,19 @@ Modal.prototype.resize = function() {
 };
 
 let modal = new Modal($('#modal-thumb a'));
+
+
+$('#more-btn').on('click', function() {
+  let html = `
+    <li>
+      <a href="images/photo-04.JPG" data-index="3">
+        <img alt="" src="images/photo-04.JPG" width="160" class="img-thumbnail">
+      </a>
+     </li>
+  `;
+
+  $(html).appendTo($('#modal-thumb')).hide().fadeIn();
+  $(this).fadeOut();
+
+  modal.$element = $('#modal-thumb a');
+});

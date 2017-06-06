@@ -11,7 +11,6 @@ Modal.prototype.initialize = function(element) {
   this.$prev      = $('#modal-prev');
   this.$overlay   = $('#modal-overlay');
   this.$window    = $(window);
-  this.index      = 0;
 
   this.handleEvents();
 };
@@ -52,8 +51,16 @@ Modal.prototype.show = function(e) {
   this.$contents.html('<img src="' + src + '"/>');
   this.$container.fadeIn();
   this.$overlay.fadeIn();
-  this.index = $target.data('index');
+
+  let index = $target.data('index');
+  this.countChange = this.createCounter(index, this.$element.length);
   return false;
+};
+
+Modal.prototype.createCounter = function(index, length) {
+  return function(num) {
+    return index = (index + num + length) % length;
+  };
 };
 
 Modal.prototype.hide = function(e) {
@@ -70,18 +77,12 @@ Modal.prototype.slide = function(index) {
   });
 };
 
-Modal.prototype.countChange = function(num, index, length) {
-  return (index + num + length) % length;
-};
-
 Modal.prototype.next = function() {
-  this.index = this.countChange(1, this.index, this.$element.length);
-  this.slide(this.index);
+  this.slide(this.countChange(1));
 };
 
 Modal.prototype.prev = function() {
-  this.index = this.countChange(-1, this.index, this.$element.length);
-  this.slide(this.index);
+  this.slide(this.countChange(-1));
 };
 
 let modal = new Modal($('#modal-thumb a'));

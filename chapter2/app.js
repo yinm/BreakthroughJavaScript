@@ -43,7 +43,7 @@ Modal.prototype.handleEvents = function() {
     return false;
   });
 
-  this.$window.on('resize', function() {
+  this.$window.on('resize load', function() {
     self.resize();
   });
 };

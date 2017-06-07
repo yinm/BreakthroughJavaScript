@@ -1,17 +1,13 @@
-let uniq = function(array) {
-  let obj = {};
-  let uniqArray = [];
-  let length = array.length;
+let deferred = new $.Deferred();
 
-  for (let i = 0; i < length; i++) {
-    obj[array[i]] = '';
-  }
+setTimeout(function() {
+  deferred.resolve();
+}, 2000);
 
-  for (let k in obj) {
-    uniqArray.push(k);
-  }
-
-  return uniqArray;
-};
-
-console.log(uniq ([1, 2, 5, 5, 1, 3, 1, 2, 4, 3]));
+deferred.promise().then(function() {
+  return $.ajax({
+    url: './data.json'
+  });
+}).then(function(res) {
+  console.log(res);
+});

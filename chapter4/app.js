@@ -1,17 +1,13 @@
-let prevState = new $.Deferred().resolve().promise();
+let deferred = new $.Deferred();
 
-function asyncFuncDef() {
-  let deferred = new $.Deferred();
-  setTimeout(function() {
-    deferred.resolve('done');
-  }, 1000);
+setTimeout(function() {
+  deferred.resolve();
+}, 2000);
 
-  return deferred.promise();
-}
-
-$(document).on('click', function() {
-  prevState = prevState.then(function() {
-    console.log('done');
-    return asyncFuncDef();
+deferred.promise().then(function() {
+  return $.ajax({
+    url: 'data.json'
   });
+}).then(function(res) {
+  console.log(res);
 });

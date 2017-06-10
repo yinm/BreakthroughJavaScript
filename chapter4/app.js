@@ -1,5 +1,5 @@
-filterResult = _.filter([1, 2, 3, 4, 5, 6], function(num) {
-  return num % 2 === 0;
+reduceResult = _.reduce([0, 1, 2, 3], function(prev, current) {
+  return prev + current;
 });
 
-console.log(filterResult);
+console.log(reduceResult);

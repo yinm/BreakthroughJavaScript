@@ -1,18 +1,18 @@
-let prevState = new $.Deferred().resolve().promise();
-
-function asyncFuncDef() {
+let deferreds = $('img').map(function(i, element) {
   let deferred = new $.Deferred();
+  let img = new Image();
 
-  setTimeout(function() {
-    deferred.resolve('done');
-  }, 1000);
+  img.onload = function() {
+    return deferred.resolve();
+  };
 
+  img.onerror = function() {
+    return deferred.resolve();
+  };
+  img.src = element.src;
   return deferred.promise();
-}
+});
 
-$(document).on('click', function() {
-  prevState = prevState.then(function() {
-    console.log('done');
-    return asyncFuncDef();
-  });
+$.when.apply($, deferreds).then(function() {
+  console.log('done');
 });

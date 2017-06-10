@@ -1,17 +1,18 @@
-function App(url) {
-  let self = this;
-  this.fetch(url).then(function(data) {
-    self.data = data;
-  }, function(e) {
-    console.error('データの取得に失敗しました');
-  });
-}
+let stooges = [
+  {
+    name: 'curly',
+    age: 25
+  }, {
+    name: 'moe',
+    age: 21
+  }, {
+    name: 'larry',
+    age: 23
+  }
+];
 
-App.prototype.fetch = function(url) {
-  return $.ajax({
-    url: url,
-    dataType: 'json'
-  });
-};
+mapResult = _.map(stooges, function(e) {
+  return e.name;
+});
 
-new App('data.json');
+console.log(mapResult);

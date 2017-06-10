@@ -1,5 +1,5 @@
-filterResult = _.filter([12, 5, 8, 130, 44], function(e) {
-  return e >= 10;
+filterResult = _.filter([1, 2, 3, 4, 5, 6], function(num) {
+  return num % 2 === 0;
 });
 
 console.log(filterResult);

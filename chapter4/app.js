@@ -1,18 +1,5 @@
-let stooges = [
-  {
-    name: 'curly',
-    age: 25
-  }, {
-    name: 'moe',
-    age: 21
-  }, {
-    name: 'larry',
-    age: 23
-  }
-];
-
-mapResult = _.map(stooges, function(e) {
-  return e.name;
+filterResult = _.filter([12, 5, 8, 130, 44], function(e) {
+  return e >= 10;
 });
 
-console.log(mapResult);
+console.log(filterResult);

@@ -1,13 +1,23 @@
-let buttonView = {
-  label: 'underscore',
-  onClick: function() {
-    alert('clicked: ' + this.label);
-  },
-  onHover: function() {
-    console.log('hovering: ' + this.label);
-  }
-};
-_.bindAll(buttonView, 'onClick', 'onHover');
+function App(url) {
+  this.bindEvents();
+  let self = this;
+  this.fetch(url).then(function(data) {
+    self.data = data;
+  }, function(e) {
+    console.error('データの取得に失敗しました');
+  });
+}
 
-$('#underscore_button').on('click', buttonView.onClick);
-$('#underscore_button').on('mouseenter', buttonView.onHover);
+App.prototype.fetch = function(url) {
+  return $.ajax({
+    url: url,
+    dataType: 'json'
+  });
+};
+
+App.prototype.bindEvents = function() {
+  _.bindAll(this, 'onChange');
+  $('select').on('change', this.onChange);
+};
+
+new App('data.json');

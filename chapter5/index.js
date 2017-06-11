@@ -15,7 +15,10 @@
       .removeClass('page-enter')
       .filter('.page' + pageid)
       .appendTo('article')
-      .addClass('page-enter');
+      .addClass('page-enter')
+      .on('webkitAnimationEnd', function() {
+        alert('animationEnd');
+      });
   }
 
   function parseUrl(url) {

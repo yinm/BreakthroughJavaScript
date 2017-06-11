@@ -1,6 +1,7 @@
 ;(function() {
   let $pages;
   let pageObjects = [];
+  let urlHistory = [];
 
   function pageFactory(url, $element, enter, leave) {
     return {
@@ -15,6 +16,8 @@
     let pageid = parseUrl(location.hash);
     let $prevPage = $pages.filter(':visible');
     let $nextPage = getPage(pageObjects, pageid).$element;
+
+    urlHistory.push(pageid);
 
     pageLeave($prevPage).then(function() {
       return pageEnter($nextPage);

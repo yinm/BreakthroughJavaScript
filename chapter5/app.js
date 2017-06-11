@@ -16,18 +16,8 @@
     let $prevPage = $pages.filter(':visible');
     let $nextPage = getPage(pageObjects, pageid).$element;
 
-    animEnd(
-      $prevPage.addClass('page-leave')
-    ).then(function() {
-      $pages.detach().removeClass('page-leave');
-
-      return animEnd(
-        $nextPage
-          .appendTo('article')
-          .addClass('page-enter')
-      );
-    }).then(function() {
-      $nextPage.removeClass('page-enter');
+    pageLeave($prevPage).then(function() {
+      return pageEnter($nextPage);
     });
   }
 
@@ -70,6 +60,21 @@
     return pages.filter(function(e) {
       return e.url == key;
     })[0] || null;
+  }
+
+  function pageEnter($element) {
+    let $page = $element.addClass('page-enter').appendTo('article');
+    return animEnd($page).then(function() {
+      $element.removeClass('page-enter');
+    });
+  }
+
+  function pageLeave($element) {
+    let $page = $element.addClass('page-leave');
+    return animEnd($page).then(function() {
+      $element.detach();
+      $element.removeClass('page-leave');
+    })
   }
 
   init();

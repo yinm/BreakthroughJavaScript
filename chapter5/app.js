@@ -5,7 +5,6 @@
     let pageid = parseUrl(location.hash);
 
     $pages
-      .filter(':visible')
       .fadeOut(400)
       .promise()
       .then(function() {

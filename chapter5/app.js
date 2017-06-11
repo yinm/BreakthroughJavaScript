@@ -79,27 +79,14 @@
 
   function parseUrl(url) { return url.slice(1) ||1; };
 
-  function init() {
-
-    pageObjects.push( pageFactory( "1", $(".page1"), function($el, action, prev, next){
-      alert("hello");
-      return action();
-    }, function($el, action, prev, next){
-      alert("bye");
-      return action();
-    }) );
-
-    pageObjects.push( pageFactory( "2", $(".page2"), null, null) );
-    pageObjects.push( pageFactory( "3", $(".page3"), null, null) );
-    pageObjects.push( pageFactory( "4", $(".page4"), null, null) );
-
-    $pages = $("[data-role='page']").detach();
-
+  function start() {
     $(window)
-      .on("hashchange", urlChangeHandler)
-      .trigger("hashchange");
-  };
+      .on('hashchange', urlChangeHandler)
+      .trigger('hashchange');
+  }
 
-  init();
+  function add(url, $el, enter, leave) {
+    pageObjects.push(pageFactory(url, $el, enter, leave));
+  }
 
 })();

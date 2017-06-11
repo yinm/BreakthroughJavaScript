@@ -13,7 +13,15 @@ function createEnterFunc(path) {
   }
 }
 
-myRouter.add('1', $('.page1').detach());
+function leave($el, action) {
+  return $el.find('.inner')
+    .fadeOut(300).promise()
+    .then(function() {
+      return action();
+    });
+}
+
+myRouter.add('1', $('.page1').detach(), null, leave);
 myRouter.add('2', $('<section class="page"/>'), createEnterFunc('./page2.html'));
 myRouter.add('3', $('<section class="page"/>'), createEnterFunc('./page3.html'));
 myRouter.add('4', $('<section class="page"/>'), createEnterFunc('./page4.html'));

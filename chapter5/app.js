@@ -13,7 +13,9 @@
 
   function init() {
     $pages = $('[data-role="page"]').detach();
-    $(window).on('hashchange', urlChangeHandler);
+    $(window)
+      .on('hashchange', urlChangeHandler)
+      .trigger('hashchange');
   }
 
   init();

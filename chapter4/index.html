@@ -52,6 +52,17 @@
     </tbody>
   </table>
 
+  <script type="text/template" data-template="item">
+    <% _.each(list, function(e, i) { %>
+      <tr>
+        <th><%= e.id %></th>
+        <td><%= e.name %></td>
+        <td><%= e.age %></td>
+        <td><%= e.group %></td>
+      </tr>
+    <% }); %>
+  </script>
+
   <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

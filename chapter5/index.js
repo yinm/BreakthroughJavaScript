@@ -12,8 +12,10 @@
     let pageid = parseUrl(location.hash);
     $pages
       .detach()
+      .removeClass('page-enter')
       .filter('.page' + pageid)
-      .appendTo('article');
+      .appendTo('article')
+      .addClass('page-enter');
   }
 
   function parseUrl(url) {

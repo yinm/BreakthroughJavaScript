@@ -50,6 +50,8 @@
       var prevPage = getPage(pageObjects, prev)
         , nextPage = getPage(pageObjects, next);
 
+      if(! nextPage) throw new Error(pageid + 'に対応するページがありません');
+
       firstPromise.then(function(){
         var page = prevPage;
         if(page) return page.leave( page.$el, pageLeave.bind(this, page.$el), prev, next );

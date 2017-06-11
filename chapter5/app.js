@@ -80,5 +80,11 @@
     })
   }
 
+  function scanLast(array, func) {
+    let temp = array.slice(-2);
+    if (temp.length === 1) temp.unshift(null);
+    return func.apply(this, temp);
+  }
+
   init();
 })();

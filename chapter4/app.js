@@ -1,8 +1,10 @@
 function App(url) {
+  this.template = _.template($('[data-template="item"]').html());
   this.bindEvents();
   let self = this;
   this.fetch(url).then(function(data) {
     self.data = data;
+    self.render(self.data.list);
   }, function(e) {
     console.error('データの取得に失敗しました');
   });
@@ -20,7 +22,7 @@ App.prototype.bindEvents = function() {
   $('select').on('change', this.onChange);
 };
 
-app.prototype.isEmpty = function(value) {
+App.prototype.isEmpty = function(value) {
   return value === '';
 };
 
@@ -57,6 +59,13 @@ App.prototype.filter = function(list, value) {
   return _.filter(list, function(e) {
     return e['group'] === value;
   });
+};
+
+App.prototype.render = function(data) {
+  let html = this.template({
+    list: data
+  });
+  $('.table tbody').html(html);
 };
 
 new App('data.json');

@@ -10,7 +10,10 @@
 
   function urlChangeHandler() {
     let pageid = parseUrl(location.hash);
-    $pages.filter('.page' + pageid).appendTo('article');
+    $pages
+      .detach()
+      .filter('.page' + pageid)
+      .appendTo('article');
   }
 
   function parseUrl(url) {

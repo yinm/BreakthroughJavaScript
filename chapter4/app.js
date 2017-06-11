@@ -1,4 +1,5 @@
 function App(url) {
+  this.bindEvents();
   let self = this;
 
   this.fetch(url).then(function(data) {
@@ -7,6 +8,11 @@ function App(url) {
     console.error('データの取得に失敗しました');
   });
 }
+
+App.prototype.bindEvents = function() {
+  _.bindAll(this, 'onChange');
+  $('select').on('change', this.onChange);
+};
 
 App.prototype.fetch = function(url) {
   return $.ajax({

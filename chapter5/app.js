@@ -12,6 +12,8 @@
     }
   }
 
+  let firstPromise = new $.Deferred().resolve();
+
   function urlChangeHandler() {
     let pageid = parseUrl(location.hash);
     let $prevPage = $pages.filter(':visible');
@@ -19,8 +21,15 @@
 
     urlHistory.push(pageid);
 
-    pageLeave($prevPage).then(function() {
-      return pageEnter($nextPage);
+    scanLast(urlHistory, function(prev, next) {
+      let prevPage = getPage(pageObjects, prev);
+      let nextPage = getPage(pageObjects, next);
+
+      firstPromise.then(function() {
+        if (prevPage) return pageLeave(prevPage.$element);
+      }).then(function() {
+        return pageEnter(nextPage.$element);
+      });
     });
   }
 

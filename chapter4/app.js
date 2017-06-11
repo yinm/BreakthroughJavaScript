@@ -1,19 +1,18 @@
-let deferreds = $('img').map(function(i, element) {
-  let deferred = new $.Deferred();
-  let img = new Image();
+function App(url) {
+  let self = this;
 
-  img.onload = function() {
-    return deferred.resolve();
-  };
+  this.fetch(url).then(function(data) {
+    self.data = data;
+  }, function(e) {
+    console.error('データの取得に失敗しました');
+  });
+}
 
-  img.onerror = function() {
-    return deferred.resolve();
-  };
+App.prototype.fetch = function(url) {
+  return $.ajax({
+    url: url,
+    dataType: 'json'
+  });
+};
 
-  img.src = element.src;
-  return deferred.promise();
-});
-
-$.when.apply($, deferreds).then(function() {
-  console.log('done');
-});
+new App('data.json');

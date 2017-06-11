@@ -7,8 +7,8 @@
     return {
       url: url,
       $element: $element,
-      enter: enter,
-      leave: leave
+      enter: enter || pageEnter,
+      leave: leave || pageLeave
     }
   }
 
@@ -26,9 +26,9 @@
       let nextPage = getPage(pageObjects, next);
 
       firstPromise.then(function() {
-        if (prevPage) return pageLeave(prevPage.$element);
+        if (prevPage) return prevPage.leave(prevPage.$element);
       }).then(function() {
-        return pageEnter(nextPage.$element);
+        return nextPage.enter(nextPage.$element);
       });
     });
   }

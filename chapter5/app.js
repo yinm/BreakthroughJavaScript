@@ -2,4 +2,11 @@ function urlChangeHandler() {
   alert(location.hash);
 }
 
-$(window).on('hashchange', urlChangeHandler);
+let $pages;
+
+function init() {
+  $pages = $('[data-role="page"]').detach();
+  $(window).on('hashchange', urlChangeHandler);
+}
+
+init();

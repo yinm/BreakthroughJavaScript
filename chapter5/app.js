@@ -19,8 +19,9 @@
       $prevPage
         .addClass('page-leave')
         .on('webkitAnimationEnd', function onFadeOut() {
+          $prevPage.off('webkitAnimationEnd', onFadeOut)
+
           $nextPage
-            .off('webkitAnimationEnd', onFadeOut)
             .removeClass('page-leave')
             .detach();
         enter();

@@ -2,7 +2,7 @@ $(document).on('click', '.page a', function(e) {
   e.preventDefault();
 
   var href = $(this).attr('href');
-  history.pushState(null, null, href);
+  myRouter.navigate(href);
 });
 
 function createEnterFunc(path) {

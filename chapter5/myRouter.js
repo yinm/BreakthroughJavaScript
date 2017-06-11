@@ -96,7 +96,13 @@
 
   window.myRouter = {
     add: add,
+    navigate: navigate,
     start: start
   };
+
+  function navigate(url) {
+    history.pushState(null, null, url);
+    urlChangeHandler();
+  }
 
 })();

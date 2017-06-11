@@ -1,10 +1,20 @@
 ;(function() {
   let $pages;
+  let pageObjects = [];
+
+  function pageFactory(url, $element, enter, leave) {
+    return {
+      url: url,
+      $element: $element,
+      enter: enter,
+      leave: leave
+    }
+  }
 
   function urlChangeHandler() {
     let pageid = parseUrl(location.hash);
     let $prevPage = $pages.filter(':visible');
-    let $nextPage = $pages.filter('.page' + pageid);
+    let $nextPage = getPage(pageObjects, pageid).$element;
 
     animEnd(
       $prevPage.addClass('page-leave')
@@ -26,6 +36,11 @@
   };
 
   function init() {
+    pageObjects.push( pageFactory('1', $('.page1'), null, null) );
+    pageObjects.push( pageFactory('2', $('.page2'), null, null) );
+    pageObjects.push( pageFactory('3', $('.page3'), null, null) );
+    pageObjects.push( pageFactory('4', $('.page4'), null, null) );
+
     $pages = $('[data-role="page"]').detach();
     $(window)
       .on('hashchange', urlChangeHandler)
@@ -49,6 +64,12 @@
     });
 
     return dfd;
+  }
+
+  function getPage(pages, key) {
+    return pages.filter(function(e) {
+      return e.url == key;
+    })[0] || null;
   }
 
   init();

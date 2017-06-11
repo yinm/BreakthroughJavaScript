@@ -42,7 +42,7 @@
   var firstPromise = new $.Deferred().resolve();
 
   function urlChangeHandler() {
-    var pageid = parseUrl( location.hash );
+    var pageid = parseUrl(location.pathname);
 
     urlHistory.push( pageid );
 
@@ -77,7 +77,10 @@
     return dfd;
   };
 
-  function parseUrl(url) { return url.slice(1) ||1; };
+  function parseUrl(url) {
+    if (url == '/') url = '/index.html';
+    return url;
+  };
 
   function start() {
     $(window)

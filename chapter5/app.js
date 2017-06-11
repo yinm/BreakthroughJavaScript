@@ -4,10 +4,15 @@
   function urlChangeHandler() {
     let pageid = parseUrl(location.hash);
 
-    $pages
+    let $page = $pages
       .detach()
+      .removeClass('page-enter')
       .filter('.page' + pageid)
       .appendTo('article');
+
+    setTimeout(function() {
+      $page.addClass('page-enter');
+    }, 0);
   }
 
   function parseUrl(url) {

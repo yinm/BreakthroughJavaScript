@@ -81,8 +81,8 @@
 
   function start() {
     $(window)
-      .on('hashchange', urlChangeHandler)
-      .trigger('hashchange');
+      .on('popstate', urlChangeHandler)
+      .trigger('popstate');
   }
 
   function add(url, $el, enter, leave) {

@@ -8,7 +8,7 @@
   }
 
   function parseUrl(url) {
-    return url.slice(1);
+    return url.slice(1) || 1;
   };
 
   function init() {

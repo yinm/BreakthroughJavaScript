@@ -1,14 +1,16 @@
-new $.Deferred().resolve().promise().then(function() {
+let prevState = $.Deferred().resolve().promise();
+
+function asyncFuncDef() {
   let deferred = new $.Deferred();
-  $('body').animate({
-    marginTop: 100
-  }, {
-    duration: 1000,
-    complete: function() {
-      deferred.resolve();
-    }
-  });
+  setTimeout(function() {
+    deferred.resolve('done');
+  }, 1000);
   return deferred.promise();
-}).then(function() {
-  console.log('done');
+}
+
+$(document).on('click', function() {
+  prevState = prevState.then(function() {
+    console.log('done');
+    return asyncFuncDef();
+  });
 });

@@ -45,27 +45,27 @@ footer {
 }
 
 .page.page-enter {
-  -webkit-animation: fadein 1.5s ease-out;
+  -webkit-animation: flipin 1.5s ease-out;
 }
 
-@-webkit-keyframes fadein {
+@-webkit-keyframes flipin {
   0% {
-    opacity: 0;
+    -webkit-transform: perspective(1200) rotateY(-90deg);
   }
   100% {
-    opacity: 1;
+    -webkit-transform: perspective(1200) rotateX(0deg);
   }
 }
 
 .page.page-leave {
-  -webkit-animation: fadeout 0.4s ease-out;
+  -webkit-animation: flipout 0.4s ease-out;
 }
 
-@-webkit-keyframes fadeout {
+@-webkit-keyframes flipout {
   0% {
-    opacity: 1;
+    -webkit-transform: perspective(1200) rotateY(0deg);
   }
   100% {
-    opacity: 0;
+    -webkit-transform: perspective(1200) rotateY(90deg);
   }
 }

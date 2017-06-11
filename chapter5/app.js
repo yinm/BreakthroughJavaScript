@@ -1,99 +1,105 @@
-;(function() {
-  let $pages;
-  let pageObjects = [];
-  let urlHistory = [];
+;(function(){
 
-  function pageFactory(url, $element, enter, leave) {
+  var $pages;
+  var pageObjects = [];
+  var urlHistory = [];
+
+  function pageFactory(url, $el, enter, leave) {
     return {
       url: url,
-      $element: $element,
+      $el: $el,
       enter: enter || pageEnter,
       leave: leave || pageLeave
     }
   }
 
-  let firstPromise = new $.Deferred().resolve();
+  function getPage(pages, key){
+    return pages.filter(function(e){
+        return e.url == key;
+      })[0] || null;
+  }
 
-  function urlChangeHandler() {
-    let pageid = parseUrl(location.hash);
-    let $prevPage = $pages.filter(':visible');
-    let $nextPage = getPage(pageObjects, pageid).$element;
-
-    urlHistory.push(pageid);
-
-    scanLast(urlHistory, function(prev, next) {
-      let prevPage = getPage(pageObjects, prev);
-      let nextPage = getPage(pageObjects, next);
-
-      firstPromise.then(function() {
-        if (prevPage) return prevPage.leave(prevPage.$element);
-      }).then(function() {
-        return nextPage.enter(nextPage.$element);
-      });
+  function pageEnter($el) {
+    var $page = $el.addClass('page-enter').appendTo('article');
+    return animEnd( $page ).then(function(){
+      $el.removeClass('page-enter');
     });
   }
 
-  function parseUrl(url) {
-    return url.slice(1) || 1;
-  };
-
-  function init() {
-    pageObjects.push( pageFactory('1', $('.page1'), null, null) );
-    pageObjects.push( pageFactory('2', $('.page2'), null, null) );
-    pageObjects.push( pageFactory('3', $('.page3'), null, null) );
-    pageObjects.push( pageFactory('4', $('.page4'), null, null) );
-
-    $pages = $('[data-role="page"]').detach();
-    $(window)
-      .on('hashchange', urlChangeHandler)
-      .trigger('hashchange');
+  function pageLeave($el) {
+    return animEnd( $el.addClass('page-leave') ).then(function() {
+      $el.detach();
+      $el.removeClass('page-leave');
+    });
   }
 
-  function animEnd($element) {
-    let dfd = new $.Deferred;
-    let callback = function() {
-      dfd.resolve($element);
-    };
+  function scanLast(arr, f){
+    var temp = arr.slice(-2);
+    if(temp.length === 1) temp.unshift(null);
+    return f.apply(this, temp);
+  }
 
-    if ($element.length === 0) {
+  var firstPromise = new $.Deferred().resolve();
+
+  function urlChangeHandler() {
+    var pageid = parseUrl( location.hash );
+
+    urlHistory.push( pageid );
+
+    scanLast(urlHistory, function(prev, next){
+      var prevPage = getPage(pageObjects, prev)
+        , nextPage = getPage(pageObjects, next);
+
+      firstPromise.then(function(){
+        var page = prevPage;
+        if(page) return page.leave( page.$el, pageLeave.bind(this, page.$el), prev, next );
+      }).then(function() {
+        var page = nextPage;
+        return page.enter( page.$el, pageEnter.bind(this, page.$el), prev, next );
+      });
+    });
+  };
+
+  function animEnd($el) {
+    var dfd = new $.Deferred
+      , callback = function(){ dfd.resolve($el); };
+
+    if( $el.length === 0 || $el.css("-webkit-animation") === undefined ) {
       dfd.resolve();
       return dfd;
     }
 
-    $element.on('webkitAnimationEnd', callback);
+    $el.on( "webkitAnimationEnd", callback );
     dfd.done(function() {
-      $element.off('webkitAnimationEnd', callback);
+      $el.off( "webkitAnimationEnd", callback );
     });
 
     return dfd;
-  }
+  };
 
-  function getPage(pages, key) {
-    return pages.filter(function(e) {
-      return e.url == key;
-    })[0] || null;
-  }
+  function parseUrl(url) { return url.slice(1) ||1; };
 
-  function pageEnter($element) {
-    let $page = $element.addClass('page-enter').appendTo('article');
-    return animEnd($page).then(function() {
-      $element.removeClass('page-enter');
-    });
-  }
+  function init() {
 
-  function pageLeave($element) {
-    let $page = $element.addClass('page-leave');
-    return animEnd($page).then(function() {
-      $element.detach();
-      $element.removeClass('page-leave');
-    })
-  }
+    pageObjects.push( pageFactory( "1", $(".page1"), function($el, action, prev, next){
+      alert("hello");
+      return action();
+    }, function($el, action, prev, next){
+      alert("bye");
+      return action();
+    }) );
 
-  function scanLast(array, func) {
-    let temp = array.slice(-2);
-    if (temp.length === 1) temp.unshift(null);
-    return func.apply(this, temp);
-  }
+    pageObjects.push( pageFactory( "2", $(".page2"), null, null) );
+    pageObjects.push( pageFactory( "3", $(".page3"), null, null) );
+    pageObjects.push( pageFactory( "4", $(".page4"), null, null) );
+
+    $pages = $("[data-role='page']").detach();
+
+    $(window)
+      .on("hashchange", urlChangeHandler)
+      .trigger("hashchange");
+  };
 
   init();
+
 })();

@@ -1,19 +1,21 @@
-function enter($el, action, prev, next) {
-  return $.ajax({
-    url: 'page2.html',
-    dataType: 'html'
+function createEnterFunc(path) {
+  return function enter($el, action, prev, next) {
+    return $.ajax({
+      url: path,
+      dataType: 'html'
 
-  }).then(function(d) {
-    var content = $(d).find('[data-role=page] .inner');
-    $el.html(content);
+    }).then(function(d) {
+      var content = $(d).find('[data-role=page] .inner');
+      $el.html(content);
 
-    return action();
-  });
+      return action();
+    });
+  }
 }
 
 myRouter.add('1', $('.page1').detach());
-myRouter.add('2', $('<section class="page"/>'), enter);
-myRouter.add('3', $('<section class="page"/>'), null, null);
-myRouter.add('4', $('<section class="page"/>'));
+myRouter.add('2', $('<section class="page"/>'), createEnterFunc('./page2.html'));
+myRouter.add('3', $('<section class="page"/>'), createEnterFunc('./page3.html'));
+myRouter.add('4', $('<section class="page"/>'), createEnterFunc('./page4.html'));
 
 myRouter.start();

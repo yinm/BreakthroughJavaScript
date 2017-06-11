@@ -56,3 +56,16 @@ footer {
     opacity: 1;
   }
 }
+
+.page.page-leave {
+  -webkit-animation: fadeout 0.4s ease-out;
+}
+
+@-webkit-keyframes fadeout {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

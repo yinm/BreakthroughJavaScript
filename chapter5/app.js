@@ -5,9 +5,11 @@
     let pageid = parseUrl(location.hash);
 
     $pages
+      .hide()
       .detach()
       .filter('.page' + pageid)
-      .appendTo('article');
+      .appendTo('article')
+      .fadeIn(1500);
   }
 
   function parseUrl(url) {

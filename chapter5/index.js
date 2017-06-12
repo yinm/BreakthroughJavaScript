@@ -14,28 +14,21 @@
     let $prevPage = $pages.filter(':visible');
     let $nextPage = $pages.filter('.page' + pageid);
 
-    function enter() {
-      $pages.detach();
+    animEnd(
+      $prevPage.addClass('page-leave')
 
-      $nextPage
-        .removeClass('page-enter')
-        .appendTo('article')
-        .addClass('page-enter');
-    }
+    ).then(function() {
+      $page.detach().removeClass('page-leave');
 
-    if ($prevPage.length > 0) {
-      $prevPage
-        .addClass('page-leave')
-        .on('webkitAnimationEnd', function onfadeOut() {
-          $nextPage
-            .off('webkitAnimationEnd', onfadeOut)
-            .removeClass('page-leave')
-            .detach();
-          enter();
-        });
-    } else {
-      enter();
-    }
+      return animEnd(
+        $nextPage
+          .appendTo('article')
+          .addClass('page-enter')
+      );
+
+    }).then(function() {
+      $nextPage.removeClass('page-enter');
+    });
   }
 
   function animEnd($element) {

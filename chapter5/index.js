@@ -1,6 +1,15 @@
 ;(function() {
   let $page;
 
+  function pageFactory(url, $element, enter, leave) {
+    return {
+      url: url,
+      $element: $element,
+      enter: enter,
+      leave: leave
+    }
+  }
+
   function init() {
     $pages = $('[data-role="page"]').detach();
     $(window)

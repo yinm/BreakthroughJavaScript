@@ -38,6 +38,25 @@
     }
   }
 
+  function animEnd($element) {
+    let dfd = new $.Deferred;
+    let callback = function() {
+      dfd.resolve($element);
+    };
+
+    if ($element.length === 0) {
+      dfd.resolve();
+      return dfd;
+    }
+
+    $element.on('webkitAnimationEnd', callback);
+    dfd.done(function() {
+      $element.off('webkitAnimationEnd', callback);
+    });
+
+    return dfd;
+  }
+
   function parseUrl(url) {
     return url.slice(1) || 1;
   }

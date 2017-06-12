@@ -18,7 +18,7 @@
       $prevPage.addClass('page-leave')
 
     ).then(function() {
-      $page.detach().removeClass('page-leave');
+      $pages.detach().removeClass('page-leave');
 
       return animEnd(
         $nextPage
